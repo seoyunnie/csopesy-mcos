@@ -95,6 +95,8 @@ void shutdown_marquee(std::thread& thread) {
 int main() {
   initialize_console();
 
+  std::thread marquee_thread(marquee_loop);
+
   std::cout << '\n';
 
   std::cout << '\n'
@@ -105,8 +107,6 @@ int main() {
             << "Version date: 2026-09-20\n";
 
   std::cout << '\n';
-
-  std::thread marquee_thread(marquee_loop);
 
   std::string in;
 
