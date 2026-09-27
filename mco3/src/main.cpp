@@ -31,12 +31,12 @@ bool is_cursor_escape_sequence(const std::string& in) {
 }
 
 constexpr char DEFAULT_MARQUEE_TEXT[] = "Welcome to CSOPESY!";
-constexpr int DEFAULT_MARQUEE_SPEED = 100;
+constexpr int DEFAULT_MARQUEE_SPEED = 250;
 
 std::mutex marquee_mutex;
 std::condition_variable marquee_cv;
 
-bool is_marquee_running = false;
+bool is_marquee_running = true;
 bool is_shutting_down = false;
 
 int marquee_speed = DEFAULT_MARQUEE_SPEED;
