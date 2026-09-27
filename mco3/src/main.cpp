@@ -36,8 +36,8 @@ constexpr int DEFAULT_MARQUEE_SPEED = 100;
 std::mutex marquee_mutex;
 std::condition_variable marquee_cv;
 
-bool marquee_running = false;
-bool terminate_marquee = false;
+bool is_marquee_running = false;
+bool is_shutting_down = false;
 
 int marquee_speed = DEFAULT_MARQUEE_SPEED;
 std::string marquee_text = DEFAULT_MARQUEE_TEXT;
@@ -53,15 +53,15 @@ void display_marquee(const std::string& text, std::size_t pos) {
             << std::flush;
 }
 
-void initialize_marquee() {
+void marquee_loop() {
   std::size_t pos = 0;
 
   std::unique_lock lock(marquee_mutex);
 
-  while (!terminate_marquee) {
-    marquee_cv.wait(lock, [] { return marquee_running || terminate_marquee; });
+  while (!is_shutting_down) {
+    marquee_cv.wait(lock, [] { return is_marquee_running || is_shutting_down; });
 
-    if (terminate_marquee) {
+    if (is_shutting_down) {
       break;
     }
 
@@ -84,8 +84,8 @@ void shutdown_marquee(std::thread& thread) {
   {
     std::lock_guard lock(marquee_mutex);
 
-    terminate_marquee = true;
-    marquee_running = false;
+    is_shutting_down = true;
+    is_marquee_running = false;
   }
 
   marquee_cv.notify_one();
@@ -106,7 +106,7 @@ int main() {
 
   std::cout << '\n';
 
-  std::thread marquee_thread(initialize_marquee);
+  std::thread marquee_thread(marquee_loop);
 
   std::string in;
 
@@ -144,7 +144,7 @@ int main() {
       {
         std::lock_guard lock(marquee_mutex);
 
-        if (marquee_running) {
+        if (is_marquee_running) {
           std::cout << "Error: marquee is already running\n";
 
           std::cout << '\n';
@@ -152,7 +152,7 @@ int main() {
           continue;
         }
 
-        marquee_running = true;
+        is_marquee_running = true;
       }
 
       marquee_cv.notify_one();
@@ -164,7 +164,7 @@ int main() {
       {
         std::lock_guard lock(marquee_mutex);
 
-        if (!marquee_running) {
+        if (!is_marquee_running) {
           std::cout << "Error: marquee is not running\n";
 
           std::cout << '\n';
@@ -172,7 +172,7 @@ int main() {
           continue;
         }
 
-        marquee_running = false;
+        is_marquee_running = false;
       }
 
       std::cout << "Marquee stopped\n";
