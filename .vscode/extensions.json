@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "editorconfig.editorconfig",
+
+    /* C++ */
+    "ms-vscode.cpptools",
+
+    /* CMake */
+    "ms-vscode.cmake-tools",
+
+    /* YAML */
+    "redhat.vscode-yaml"
+  ]
+}

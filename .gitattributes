@@ -1,0 +1,13 @@
+*      text=auto
+*.cpp  text diff=cpp
+*.json text
+*.md   text diff=markdown
+*.txt  text
+
+.clang-format  text
+.editorconfig  text
+.gitattributes text export-ignore
+.gitignore     text export-ignore
+
+# Overrides
+.vscode/*.json linguist-language=jsonc
