@@ -190,7 +190,11 @@ int main() {
         continue;
       }
 
-      marquee_text = text;
+      {
+        std::lock_guard lock(marquee_mutex);
+
+        marquee_text = text;
+      }
 
       std::cout << "Text saved for marquee: " << text << '\n';
 
