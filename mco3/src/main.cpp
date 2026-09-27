@@ -70,9 +70,15 @@ void marquee_loop() {
 
     lock.unlock();
 
-    display_marquee(text, pos);
+    if (!text.empty()) {
+      pos %= text.size();
 
-    pos = !text.empty() ? (pos + 1) % text.size() : 0;
+      display_marquee(text, pos);
+
+      pos = (pos + 1) % text.size();
+    } else {
+      pos = 0;
+    }
 
     std::this_thread::sleep_for(std::chrono::milliseconds(speed));
 
