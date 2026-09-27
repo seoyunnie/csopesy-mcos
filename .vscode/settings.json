@@ -1,0 +1,11 @@
+{
+  "C_Cpp.default.cppStandard": "c++20",
+  "C_Cpp.clang_format_style": "file:${workspaceFolder}/.clang-format",
+  "C_Cpp.formatting": "clangFormat",
+  "C_Cpp.doxygen.generatedStyle": "/**",
+  "C_Cpp.codeAnalysis.clangTidy.enabled": true,
+
+  "[cpp]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+  }
+}
