@@ -5,7 +5,7 @@
 Compile the source code using [CMake](https://cmake.org/) (platform independent):
 
 ```shell
-cmake -S . -B ./build
+cmake -S . -B ./build -DCMAKE_CXX_STANDARD=20
 cmake --build ./build --target marquee-console
 ```
 
