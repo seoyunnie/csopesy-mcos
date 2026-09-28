@@ -103,10 +103,12 @@ int main() {
 
   std::thread marquee_thread(marquee_loop);
 
+  display_marquee(DEFAULT_MARQUEE_TEXT, 0);
   std::cout << '\n';
 
-  std::cout << '\n'
-            << "Group developer:\n"
+  std::cout << '\n';
+
+  std::cout << "Group developer:\n"
             << "Panaligan, Louis Raphael\n"
             << "Lopez, Kent Xavier\n"
             << '\n'
@@ -196,10 +198,18 @@ int main() {
         continue;
       }
 
+      bool is_running;
+
       {
         std::lock_guard lock(marquee_mutex);
 
+        is_running = is_marquee_running;
+
         marquee_text = text;
+      }
+
+      if (!is_running) {
+        display_marquee(text, 0);
       }
 
       std::cout << "Text saved for marquee: " << text << '\n';
