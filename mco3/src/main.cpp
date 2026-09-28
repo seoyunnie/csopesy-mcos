@@ -36,7 +36,7 @@ constexpr int DEFAULT_MARQUEE_SPEED = 250;
 std::mutex marquee_mutex;
 std::condition_variable marquee_cv;
 
-bool is_marquee_running = true;
+bool is_marquee_running = false;
 bool is_shutting_down = false;
 
 int marquee_speed = DEFAULT_MARQUEE_SPEED;
