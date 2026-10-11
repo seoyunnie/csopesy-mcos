@@ -1,5 +1,6 @@
 *      text=auto
 *.cpp  text diff=cpp
+*.hpp  text diff=cpp
 *.json text
 *.md   text diff=markdown
 *.txt  text

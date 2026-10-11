@@ -14,3 +14,4 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 add_subdirectory(mco3)
+add_subdirectory(mco4)
