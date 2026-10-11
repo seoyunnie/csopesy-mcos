@@ -2,36 +2,60 @@
 
 #include <imgui.h>
 
+#include <cstdint>
+
 #include "clock.hpp"
 
 namespace {
 
 constexpr float TASKBAR_HEIGHT = 56.0f;
 
+bool icon_button(const char* id, const os_mockup::texture::Texture& icon, const char* fallback_label,
+                 const ImVec2& fallback_size) {
+  if (icon.is_valid()) {
+    return ImGui::ImageButton(id, ImTextureRef{static_cast<ImTextureID>(static_cast<std::intptr_t>(icon.id))},
+                              ImVec2(26.0F, 24.0F));
+  }
+
+  return ImGui::Button(fallback_label, fallback_size);
 }
+
+}  // namespace
 
 namespace os_mockup::desktop {
 
-void draw_wallpaper() {
+void draw_wallpaper(const texture::Texture& wallpaper) {
   ImDrawList* draw = ImGui::GetBackgroundDrawList();
 
-  const ImVec2 size = ImGui::GetIO().DisplaySize;
+  if (wallpaper.is_valid()) {
+    ImGuiViewport* viewport = ImGui::GetMainViewport();
 
-  draw->AddRectFilledMultiColor(ImVec2(0.0f, 0.0f), size, IM_COL32(16, 42, 86, 255), IM_COL32(29, 83, 145, 255),
-                                IM_COL32(7, 24, 54, 255), IM_COL32(12, 39, 79, 255));
+    const ImVec2 pos = viewport->Pos;
+    const ImVec2 size = viewport->Size;
 
-  const ImVec2 center(size.x * 0.57f, size.y * 0.43f);
+    const ImVec2 end = ImVec2(pos.x + size.x, pos.y + size.y);
 
-  draw->AddCircleFilled(center, size.y * 0.34f, IM_COL32(42, 119, 191, 100), 96);
-  draw->AddCircleFilled(ImVec2(center.x + 100.0f, center.y + 35.0f), size.y * 0.24f, IM_COL32(65, 158, 221, 90), 96);
-  draw->AddCircleFilled(ImVec2(center.x - 90.0f, center.y + 70.0f), size.y * 0.18f, IM_COL32(22, 78, 147, 130), 96);
+    draw->AddImage(ImTextureRef{static_cast<ImTextureID>(static_cast<std::intptr_t>(wallpaper.id))}, pos, end);
+  } else {
+    const ImVec2 size = ImGui::GetIO().DisplaySize;
+
+    draw->AddRectFilledMultiColor(ImVec2(0.0f, 0.0f), size, IM_COL32(16, 42, 86, 255), IM_COL32(29, 83, 145, 255),
+                                  IM_COL32(7, 24, 54, 255), IM_COL32(12, 39, 79, 255));
+
+    const ImVec2 center(size.x * 0.57f, size.y * 0.43f);
+
+    draw->AddCircleFilled(center, size.y * 0.34f, IM_COL32(42, 119, 191, 100), 96);
+    draw->AddCircleFilled(ImVec2(center.x + 100.0f, center.y + 35.0f), size.y * 0.24f, IM_COL32(65, 158, 221, 90), 96);
+    draw->AddCircleFilled(ImVec2(center.x - 90.0f, center.y + 70.0f), size.y * 0.18f, IM_COL32(22, 78, 147, 130), 96);
+  }
 
   draw->AddText(ImVec2(32.0f, 28.0f), IM_COL32(255, 255, 255, 230), "CSOPESY");
   draw->AddText(ImVec2(32.0f, 51.0f), IM_COL32(220, 235, 255, 180), "Panaligan, Louis Raphael");
   draw->AddText(ImVec2(32.0f, 66.0f), IM_COL32(220, 235, 255, 180), "Lopez, Kent Xavier");
 }
 
-void draw_taskbar(AppState& app) {
+void draw_taskbar(AppState& app, const texture::Texture& file_explorer_icon, const texture::Texture& browser_icon,
+                  const texture::Texture& task_manager_icon) {
   const ImVec2 display = ImGui::GetIO().DisplaySize;
 
   ImGui::SetNextWindowPos(ImVec2(0.0f, display.y - TASKBAR_HEIGHT));
@@ -52,19 +76,19 @@ void draw_taskbar(AppState& app) {
 
     ImGui::SetCursorPos(ImVec2(12.0f, 9.0f));
 
-    if (ImGui::Button(" File Explorer ", ImVec2(130.0f, 36.0f))) {
+    if (icon_button("files", file_explorer_icon, " File Explorer ", ImVec2(130.0f, 36.0f))) {
       app.is_file_explorer_open = !app.is_file_explorer_open;
     }
 
     ImGui::SameLine();
 
-    if (ImGui::Button(" Browser ", ImVec2(90.0f, 36.0f))) {
+    if (icon_button("browser", browser_icon, " Browser ", ImVec2(90.0f, 36.0f))) {
       app.is_browser_open = !app.is_browser_open;
     }
 
     ImGui::SameLine();
 
-    if (ImGui::Button(" Task Manager ", ImVec2(120.0f, 36.0f))) {
+    if (icon_button("task-manager", task_manager_icon, " Task Manager ", ImVec2(120.0f, 36.0f))) {
       app.is_task_manager_open = !app.is_task_manager_open;
     }
 
