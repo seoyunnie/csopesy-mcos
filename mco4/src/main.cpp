@@ -10,6 +10,7 @@
 #include "clock.hpp"
 #include "desktop.hpp"
 #include "style.hpp"
+#include "texture.hpp"
 
 namespace {
 
@@ -82,6 +83,12 @@ int main() {
     return 1;
   }
 
+  os_mockup::texture::Texture wallpaper = os_mockup::texture::load("assets/wallpaper.jpg");
+
+  os_mockup::texture::Texture file_explorer_icon = os_mockup::texture::load("assets/icons/file_explorer.png");
+  os_mockup::texture::Texture browser_icon = os_mockup::texture::load("assets/icons/browser.png");
+  os_mockup::texture::Texture task_manager_icon = os_mockup::texture::load("assets/icons/task_manager.png");
+
   os_mockup::AppState app;
 
   while (!glfwWindowShouldClose(win) && !app.is_shutting_down) {
@@ -92,13 +99,13 @@ int main() {
 
     ImGui::NewFrame();
 
-    os_mockup::desktop::draw_wallpaper();
+    os_mockup::desktop::draw_wallpaper(wallpaper);
 
     os_mockup::apps::draw_files_app(app.is_file_explorer_open);
     os_mockup::apps::draw_browser_app(app.is_browser_open);
     os_mockup::apps::draw_task_manager(app.is_task_manager_open);
 
-    os_mockup::desktop::draw_taskbar(app);
+    os_mockup::desktop::draw_taskbar(app, file_explorer_icon, browser_icon, task_manager_icon);
 
     ImGui::Render();
 
@@ -116,6 +123,12 @@ int main() {
 
     glfwSwapBuffers(win);
   }
+
+  os_mockup::texture::destroy(wallpaper);
+
+  os_mockup::texture::destroy(file_explorer_icon);
+  os_mockup::texture::destroy(browser_icon);
+  os_mockup::texture::destroy(task_manager_icon);
 
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();

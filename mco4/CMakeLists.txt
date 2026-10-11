@@ -44,4 +44,6 @@ target_link_libraries(imgui
   PUBLIC OpenGL::GL
 )
 
+set(OS_MOCKUP_ASSETS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/assets")
+
 add_subdirectory(src)
