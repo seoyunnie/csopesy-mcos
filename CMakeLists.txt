@@ -13,10 +13,4 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
-if (MSVC)
-  add_compile_options(/W4 /WX)
-else()
-  add_compile_options(-Wall -Werror -Wextra -Wpedantic)
-endif()
-
 add_subdirectory(mco3)

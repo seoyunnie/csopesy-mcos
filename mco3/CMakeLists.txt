@@ -8,4 +8,10 @@ project(marquee-console
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 
+if (MSVC)
+  add_compile_options(/W4 /WX)
+else()
+  add_compile_options(-Wall -Werror -Wextra -Wpedantic)
+endif()
+
 add_subdirectory(src)
