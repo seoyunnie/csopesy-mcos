@@ -129,14 +129,16 @@ void draw_task_manager(bool& open) {
 
     ImGui::Separator();
 
+    ImGui::AlignTextToFramePadding();
+
     ImGui::Text("CPU");
-    ImGui::SameLine(90.0f);
+    ImGui::SameLine(50.0f);
     ImGui::ProgressBar(0.23f, ImVec2(100.0f, 0.0f), "23%");
 
     ImGui::SameLine();
 
     ImGui::Text("Memory");
-    ImGui::SameLine(385.0f);
+    ImGui::SameLine(212.5f);
     ImGui::ProgressBar(0.61f, ImVec2(100.0f, 0.0f), "61%");
 
     ImGui::Spacing();
