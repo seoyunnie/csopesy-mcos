@@ -1,5 +1,7 @@
 # OS Mockup
 
+The `main()` function for this program is located at [`./src/main.cpp`](./src/main.cpp);
+
 ## Compilation
 
 Compile the source code using [CMake](https://cmake.org/) (platform independent):
