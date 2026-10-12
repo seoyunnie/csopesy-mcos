@@ -14,7 +14,8 @@ cmake --build ./build --target os-mockup
 ## Usage
 
 ```sh
-./bin/os-mockup
+cd ./bin
+./os-mockup
 ```
 
 ## Group Members
