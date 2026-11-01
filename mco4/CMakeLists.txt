@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.15...4.4)
 
 project(os-mockup
   VERSION 1.0.0
-  # DESCRIPTION "."
+  DESCRIPTION "A program that simulates an operating system's desktop environment."
   LANGUAGES CXX
 )
 
