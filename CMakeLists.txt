@@ -13,5 +13,6 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
+add_subdirectory(mco1)
 add_subdirectory(mco3)
 add_subdirectory(mco4)
