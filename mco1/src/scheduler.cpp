@@ -353,7 +353,7 @@ std::uint16_t Scheduler::operand_value(process::Process& process, const std::str
     return static_cast<std::uint16_t>(std::min<unsigned long>(std::stoul(operand), 65535));
   }
 
-  return process.variables.try_emplace(operand, 0).first->second;
+  return process.variables.try_emplace(operand, static_cast<std::uint16_t>(0)).first->second;
 }
 
 void Scheduler::execute_one(process::Process& process, std::size_t core) {
