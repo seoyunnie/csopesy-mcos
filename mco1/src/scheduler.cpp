@@ -123,11 +123,10 @@ std::string Scheduler::status_report() const {
 
   std::ostringstream out;
 
-  const double utilization_percentage =
-    total_core_cycles_ == 0 ? 0.0
-                            : 100.0 * static_cast<double>(busy_core_cycles_) / static_cast<double>(total_core_cycles_);
   const auto used_core_cnt =
     std::count_if(cores_.begin(), cores_.end(), [](const process::CPUCore& c) { return c.process_id.has_value(); });
+  const double utilization_percentage =
+    cores_.empty() ? 0.0 : 100.0 * static_cast<double>(used_core_cnt) / static_cast<double>(cores_.size());
 
   out << std::fixed << std::setprecision(2) << "CPU utilization: " << utilization_percentage << "%\n"
       << "Cores used: " << used_core_cnt << '\n'
