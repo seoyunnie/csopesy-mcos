@@ -27,6 +27,10 @@ class Scheduler {
 
   Scheduler& operator=(const Scheduler&) = delete;
 
+  std::optional<std::string> screened_process_name_;
+
+  void set_screened_process(std::optional<std::string> name);
+
   void start();
 
   void stop();

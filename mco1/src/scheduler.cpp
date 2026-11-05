@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iomanip>
 #include <ios>
+#include <iostream>
 #include <sstream>
 #include <utility>
 
@@ -21,6 +22,12 @@ Scheduler::Scheduler(config::Config config)
 
 Scheduler::~Scheduler() {
   stop();
+}
+
+void Scheduler::set_screened_process(std::optional<std::string> name) {
+  std::lock_guard<std::mutex> lock(mutex_);
+
+  screened_process_name_ = std::move(name);
 }
 
 void Scheduler::start() {
@@ -369,6 +376,10 @@ void Scheduler::execute_one(process::Process& process, std::size_t core) {
   switch (instruction.operation) {
     case process::Operation::PRINT:
       process.logs.push_back({tick_, core, timestamp_now(), instruction.message});
+
+      if (screened_process_name_ && process.name == *screened_process_name_) {
+        std::cout << instruction.message << '\n' << std::flush;
+      }
 
       break;
     case process::Operation::DECLARE:

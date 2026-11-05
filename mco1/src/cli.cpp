@@ -149,6 +149,8 @@ void CLI::handle_screen(const std::vector<std::string>& args) {
 }
 
 void CLI::process_screen(const std::string& name) {
+  scheduler_->set_screened_process(name);
+
   std::string line;
 
   while (true) {
@@ -157,7 +159,7 @@ void CLI::process_screen(const std::string& name) {
     std::cout << "root:\\" << name << "> ";
 
     if (!std::getline(std::cin, line)) {
-      return;
+      break;
     }
 
     const std::vector<std::string> args = tokenize(line);
@@ -169,7 +171,7 @@ void CLI::process_screen(const std::string& name) {
     const std::string& cmd = args.front();
 
     if (cmd == "exit" && args.size() == 1) {
-      return;
+      break;
     }
 
     if (cmd == "process-smi" && args.size() == 1) {
@@ -178,6 +180,8 @@ void CLI::process_screen(const std::string& name) {
       std::cout << "Error: unknown command input\n";
     }
   }
+
+  scheduler_->set_screened_process(std::nullopt);
 }
 
 }  // namespace process_scheduler::cli
