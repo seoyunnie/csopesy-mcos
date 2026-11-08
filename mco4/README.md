@@ -7,7 +7,7 @@ The `main()` function for this program is located at [`./src/main.cpp`](./src/ma
 Compile the source code using [CMake](https://cmake.org/) (platform independent):
 
 ```shell
-cmake -S . -B ./build -DCMAKE_CXX_STANDARD=20
+cmake -B ./build -DCMAKE_CXX_STANDARD=20
 cmake --build ./build --target os-mockup
 ```
 
