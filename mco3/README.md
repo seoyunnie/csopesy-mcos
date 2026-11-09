@@ -1,6 +1,7 @@
 # Marquee Console
 
-The `main()` function for this program is located at [`./src/main.cpp`](./src/main.cpp).
+The `main()` function for this program is located at [`./src/main.cpp`](./src/main.cpp). The last commit before
+submission is tagged by [`mco3-submission`](https://github.com/seoyunnie/csopesy-mcos/tree/mo3-submission).
 
 ## Compilation
 

@@ -1,6 +1,7 @@
 # OS Mockup
 
-The `main()` function for this program is located at [`./src/main.cpp`](./src/main.cpp).
+The `main()` function for this program is located at [`./src/main.cpp`](./src/main.cpp). The last commit before
+submission is tagged by [`mco1-submission`](https://github.com/seoyunnie/csopesy-mcos/tree/mo1-submission).
 
 ## Compilation
 
